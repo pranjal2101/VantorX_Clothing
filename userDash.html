@@ -1,0 +1,58 @@
+<!-- user-dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="login-container">
+    <h2>Welcome, User!</h2>
+    <p>You can browse products and shop.</p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <h2>Products</h2>
+  <div id="productList" style="display: flex; flex-wrap: wrap; gap: 20px;"></div>
+
+  <script>
+    const role = sessionStorage.getItem("role");
+    if (role !== "user") {
+      alert("Access Denied");
+      window.location.href = "index.html";
+    }
+
+    function logout() {
+      sessionStorage.clear();
+      window.location.href = "index.html";
+    }
+
+    fetch("http://localhost:3000/products")
+    .then((res) => res.json())
+    .then((products) => {
+      const container = document.getElementById("productList");
+      products.forEach((p) => {
+        const div = document.createElement("div");
+        div.style.border = "1px solid #ccc";
+        div.style.padding = "10px";
+        div.style.borderRadius = "8px";
+        div.style.width = "200px";
+        div.style.textAlign = "center";
+        div.innerHTML = `
+          <h3>${p.name}</h3>
+          <img src="http://localhost:3000/${p.image_path}" width="150" style="border-radius: 5px;" />
+        `;
+        container.appendChild(div);
+      });
+    })
+    .catch((err) => {
+      console.error("Failed to load products:", err);
+      document.getElementById("productList").textContent = "Error loading products.";
+    });
+  </script>
+</body>
+
+</html>

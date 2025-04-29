@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FashionFiesta | Home</title>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="images/logo2.jpeg" alt="Logo" />
+                </div>
+
+                <!-- Hamburger to open -->
+                <label for="toggle" id="hamburger" class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+
+                <input type="checkbox" id="toggle" />
+
+                <div class="overlay"></div>
+
+                <!-- Menu Sidebar -->
+                <ul class="menu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+
+                    <!-- Auth buttons as menu items -->
+                    <li class="auth-buttons" id="auth-buttons">
+                        <a href="login.html" class="btn-login">Login</a>
+                        <a href="register.html" class="btn-register">Register</a>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero-slider">
+        <div class="slider">
+            <div class="slide">
+                <img src="images/bgImage.avif" alt="FashionFiesta 1" />
+            </div>
+            <div class="slide">
+                <img src="images/bg4.avif" alt="FashionFiesta 2" />
+            </div>
+            <div class="slide">
+                <img src="images/bg5.avif" alt="FashionFiesta 3" />
+            </div>
+            <div class="slide">
+                <img src="images/bgImage.avif" alt="FashionFiesta 4" />
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <h1>Welcome to FashionFiesta</h1>
+            <p>Trendy Outfits for Every Occasion</p>
+            <a href="shop.html" class="btn">Shop Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 FashionFiesta. All rights reserved.</p>
+    </footer>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const role = sessionStorage.getItem("role");
+            const username = sessionStorage.getItem("username");
+
+            if (role === "user") {
+                // Add menu items
+                const menu = document.querySelector(".menu");
+
+                const settingsItem = document.createElement("li");
+                settingsItem.innerHTML = `<a href="settings.html">Settings</a>`;
+                menu.appendChild(settingsItem);
+
+                const cartItem = document.createElement("li");
+                cartItem.innerHTML = `<a href="cart.html">Cart</a>`;
+                menu.appendChild(cartItem);
+
+                // Update auth buttons
+                const authDiv = document.getElementById("auth-buttons");
+                authDiv.innerHTML = `
+          <span class="btn-user">👤 ${username}</span>
+          <button onclick="logout()" class="btn-logout">Logout</button>
+        `;
+            }
+        });
+
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+
+</html>
